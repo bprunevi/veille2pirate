@@ -6,12 +6,24 @@ from requests_oauthlib import OAuth1Session
 
 # Lien utile : https://docs.tweepy.org/en/stable/examples.html
 # File to save credentials
-CREDENTIALS_FILE = "twitter_credentials.json"
+
 
 def authenticate():
+    """
+    Authenticates to twitter using either ENV variables or ./twitter.credentials.json
+    Parameters
+        none
+
+    Returns
+     consumer_key        = string with api key you may find manually on developper.twitter.com
+     consumer_secret     = string with api secret key you may find manually on developper.twitter.com
+     access_token        = string with access token you may find manually on developper.twitter.com
+     access_token_secret = string with secret access token you may find manually on developper.twitter.com
+    """
+
+    CREDENTIALS_FILE = "twitter_credentials.json"
     consumer_key = os.environ.get("CONSUMER_KEY")
     consumer_secret = os.environ.get("CONSUMER_SECRET")
-
 
     # Check if credentials file exists
     if os.path.exists(CREDENTIALS_FILE):
@@ -64,6 +76,16 @@ def authenticate():
     return consumer_key, consumer_secret, access_token, access_token_secret
 
 def new_client():
+    """
+    Authenticates, then creates a Tweepy.Client object.
+
+    Parameters
+        none
+
+    Returns
+        Tweepy.Client object
+    """
+
     consumer_key, consumer_secret, access_token, access_token_secret = authenticate()
     
     client = tweepy.Client(
@@ -75,6 +97,16 @@ def new_client():
     return client
 
 def send_tweet(client, tweet_text):
+    """
+    Sends a tweet on twitter that contains tweet_text.
+    Parameters
+        client = tweepy.Client object
+        tweet_text = string containing the text of tweet to be sent
+
+    Returns
+        see tweepy's "create_tweet" function
+    """
+
     response = client.create_tweet(
     text="Hello pirates !"
     )
@@ -84,4 +116,4 @@ def send_tweet(client, tweet_text):
 if __name__ == '__main__':
 
     client = new_client()
-    send_tweet(client, "Hello pirates again !")
+    send_tweet(client, "Hello pirates again !") 
