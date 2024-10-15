@@ -21,7 +21,7 @@ def authenticate():
      access_token_secret = string with secret access token you may find manually on developper.twitter.com
     """
 
-    CREDENTIALS_FILE = "twitter_credentials.json"
+    CREDENTIALS_FILE = "secret/twitter_credentials.json"
     consumer_key = os.environ.get("CONSUMER_KEY")
     consumer_secret = os.environ.get("CONSUMER_SECRET")
 
